@@ -71,13 +71,13 @@ fun KaigiApp() {
                         rootTabNavigator = appGraph.rootTabNavigator,
                         rootTabBarAppearance = appGraph.rootTabBarAppearance,
                         colorScheme = appearance.colorScheme,
-                        onSelectTab = { tab -> uiGraph.appNavigator.moveToTop(tab.key) },
+                        onSelectTab = { tab -> uiGraph.appNavigator.selectTab(tab.key) },
                     )
 
                     KaigiNavDisplay(
                         backStack = backStack,
                         onBack = uiGraph.appNavigator::back,
-                        onSelectTab = { tab -> uiGraph.appNavigator.moveToTop(tab.key) },
+                        onSelectTab = { tab -> uiGraph.appNavigator.selectTab(tab.key) },
                         entryProvider = uiGraph.appEntryProvider.entryProvider,
                     )
 

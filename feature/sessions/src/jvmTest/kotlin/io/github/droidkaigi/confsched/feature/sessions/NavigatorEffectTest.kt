@@ -118,7 +118,32 @@ class NavigatorEffectTest {
     }
 
     @Test
-    fun reselectsTheRootAlreadyOnTopWithoutReorderingTheStack() {
+    fun selectTabReselectsTheKeyAlreadyOnTopWithoutReorderingTheStack() {
+        val backStack = NavBackStack<NavKey>(TimetableNavKey)
+
+        val reselections = runCapturingReselections(backStack) { navigator ->
+            navigator.selectTab(TimetableNavKey)
+        }
+
+        assertEquals(listOf(TimetableNavKey), backStack.toList())
+        assertEquals(listOf(TimetableNavKey), reselections)
+    }
+
+    @Test
+    fun selectTabMovesADeeperKeyToTopWithoutReselecting() {
+        val detail = TimetableItemDetailNavKey(TimetableItemId("1"))
+        val backStack = NavBackStack<NavKey>(TimetableNavKey, detail)
+
+        val reselections = runCapturingReselections(backStack) { navigator ->
+            navigator.selectTab(TimetableNavKey)
+        }
+
+        assertEquals(listOf(detail, TimetableNavKey), backStack.toList())
+        assertEquals(emptyList(), reselections)
+    }
+
+    @Test
+    fun moveToTopIsANoOpWhenTheKeyIsAlreadyOnTop() {
         val backStack = NavBackStack<NavKey>(TimetableNavKey)
 
         val reselections = runCapturingReselections(backStack) { navigator ->
@@ -126,7 +151,7 @@ class NavigatorEffectTest {
         }
 
         assertEquals(listOf(TimetableNavKey), backStack.toList())
-        assertEquals(listOf(TimetableNavKey), reselections)
+        assertEquals(emptyList(), reselections)
     }
 
     @Test

@@ -16,6 +16,8 @@ sealed interface NavCommand {
 
     data class MoveToTop(val key: NavKey) : NavCommand
 
+    data class SelectTab(val key: NavKey) : NavCommand
+
     data class ReplaceTop(val key: NavKey) : NavCommand
 }
 
@@ -45,6 +47,11 @@ class AppNavigator(private val logger: KaigiLogger) : Navigator {
     fun moveToTop(key: NavKey) {
         logger.debug { "moveToTop $key" }
         commandChannel.trySend(NavCommand.MoveToTop(key))
+    }
+
+    fun selectTab(key: NavKey) {
+        logger.debug { "selectTab $key" }
+        commandChannel.trySend(NavCommand.SelectTab(key))
     }
 
     fun replaceTop(key: NavKey) {
