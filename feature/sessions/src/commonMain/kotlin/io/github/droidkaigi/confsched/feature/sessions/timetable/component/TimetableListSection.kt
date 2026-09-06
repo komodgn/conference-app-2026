@@ -29,7 +29,6 @@ import io.github.droidkaigi.confsched.core.ui.TimetableItemCard
 import io.github.droidkaigi.confsched.core.ui.TimetableItemCardsFlowRow
 import io.github.droidkaigi.confsched.core.ui.TimetableTimeRange
 import io.github.droidkaigi.confsched.core.ui.current
-import io.github.droidkaigi.confsched.core.ui.rememberListDetailSceneAwareLazyListState
 import io.github.droidkaigi.confsched.feature.sessions.timetable.TimetableNavKey
 
 @Composable
@@ -38,7 +37,7 @@ internal fun TimetableListSection(
     contentPadding: PaddingValues,
     onBookmarkClick: (TimetableItemId) -> Unit,
     onItemClick: (TimetableItemId) -> Unit,
-    listState: LazyListState = rememberListDetailSceneAwareLazyListState(),
+    listState: LazyListState,
 ) {
     TabReselectEffect(TimetableNavKey) { listState.animateScrollToItem(0) }
     LazyColumn(
@@ -142,6 +141,7 @@ private fun TimetableListSectionPreview(
             contentPadding = PaddingValues(),
             onBookmarkClick = {},
             onItemClick = {},
+            listState = rememberLazyListState(),
         )
     }
 }
@@ -180,6 +180,7 @@ private fun TimetableListSectionWidePreview(
                 contentPadding = PaddingValues(),
                 onBookmarkClick = {},
                 onItemClick = {},
+                listState = rememberLazyListState(),
             )
         }
     }
